@@ -47,7 +47,7 @@
                 <a class="navbar-brand" href="{{ url('/cotacoes') }}">COTAÇÕES</a>
                 <a class="navbar-brand" href="{{ url('/carteira') }}">CARTEIRA</a>  
                 <div class="dropdown-menu-right">              
-                    <a class="menu">R$ {{ Auth::user()->saldo }}</a>
+                    <a style="color: green" class="menu"><b>R$ {{ Auth::user()->saldo }}</b></a>
                 </div>
                 @endif
                 

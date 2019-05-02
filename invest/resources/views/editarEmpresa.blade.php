@@ -37,16 +37,16 @@
                             <input type="text" class="form-control" id="descricao" required name="descricao" value="{{$edit->descricao}}" placeholder="exe. Imobiliária">
                         </div>
                         <div class="form-group col-md-3">
-							<label for="categoria">Categorias</label>
-                            <select id="categoria" required name="categoria" class="form-control">
-									<option>{{ $edit->categoria }}</option>
-									<option value="Ordinária">Ação Ordinária</option>
-							    	<option value="Preferencial">Ação Preferencial</option>
-								    <option value="EX">Ação EX</option>
-								    <option value="Nominativa">Ação Nominativa</option>
-								    <option value="Escritural">Ação Escritural</option>
+							<label for="categoria">Categoria:</label>
+							<select id="categoria" required name="categoria" class="form-control">
+							    <option selected required></option>
+								<option value="Alimentos">Alimentos</option>
+								<option value="Banco">Banco</option>
+								<option value="Mineirio">Mineirio</option>
+								<option value="Petroleo">Petroleo</option>
+								<option value="Ouro">Ouro</option>
 							</select>
-                        </div>
+						</div>
                     </div>								
 			 	    <button type="submit" class="btn btn-primary btn-md">Salvar</button>
 			 		<button type="cancel" class="btn btn-danger btn-md"><a href="/empresa" style="color: white;">Cancelar</a></button>

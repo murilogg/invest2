@@ -2,15 +2,36 @@
 
 @section('content')
 
-<div class="jumbotron col-md-10 offset-md-1 bg-sucess border border-info">
+<div class="jumbotron col-md-10 offset-md-1 bg-sucess border border-primary">
         <div class="card-deck">
             <div class="card border border-primary">
                 <div class="card-body">
-                    <h5 class="card-title"><b>Cadastro de Empresas</b></h5>
-                    <p class="card=text">
-                        Aqui você cadastra suas empresas.
-                    </p>
-                    <a href="/empresa/novo" class="btn btn-primary">Cadastro</a>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+                    
+                    function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                        ['Task', 'Hours per Day'],
+                        ['Work',     11],
+                        ['Eat',      2],
+                        ['Commute',  2],
+                        ['Watch TV', 2],
+                        ['Sleep',    7]
+                    ]);
+                    
+                    var options = {
+                        title: 'My Daily Activities'
+                    };
+                    
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                    
+                    chart.draw(data, options);
+                    }
+                    </script>
+
+                    <div id="piechart" style="width: 400px; height: 200px;"></div>
                 </div>
             </div>
             <div class="card border border-primary">
@@ -26,5 +47,7 @@
             </div>            
         </div>
 </div>
+
+
 
 @endsection

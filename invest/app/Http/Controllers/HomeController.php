@@ -26,9 +26,6 @@ class HomeController extends Controller
      */
     public function index($guard = null)
     {
-        //if (Auth::guard($guard)->check()) {
-        $ids = User::all();
-        return view('home', compact('ids'));
-        
+        return view('home');   
     }
 }

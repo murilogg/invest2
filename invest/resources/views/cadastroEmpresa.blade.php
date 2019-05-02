@@ -42,7 +42,7 @@
 							    <option selected required></option>
 								<option value="Alimentos">Alimentos</option>
 								<option value="Banco">Banco</option>
-								<option value="Mineirio">Mineirio</option>
+								<option value="Minerio">Minério</option>
 								<option value="Petroleo">Petroleo</option>
 								<option value="Ouro">Ouro</option>
 							</select>

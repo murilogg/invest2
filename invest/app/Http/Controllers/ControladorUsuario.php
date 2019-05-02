@@ -12,9 +12,10 @@ class ControladorUsuario extends Controller
         $this->middleware('auth');
     }
 
-    public function edit($id)
+    public function edit()
     {
-        $edit = User::findOrFail($id); //findOrFail erro caso o usuario não seja encontrado
+        
+        $edit = auth()->user();
         if(isset($edit)) {
             return view('fazerDeposito', compact('edit'));
         }

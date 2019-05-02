@@ -16,7 +16,7 @@
 			  	<div class="form-row">
     		    <div class="form-group col-md-11">
 					    <label for="deposito">Quantia R$ </label>
-					    <input type="number" class="form-control" id="deposito" name="deposito" placeholder="exe. 2000">
+					    <input type="number" step=0.001 class="form-control" id="deposito" name="deposito" placeholder="exe. 2000">
 				    </div>
 			    </div>							
 			    <button type="submit" class="btn btn-primary btn-md">Depositar</button>

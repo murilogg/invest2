@@ -17,36 +17,47 @@ class ControladorCompra extends Controller
     public function cotacoes()
     {
         $list = Empresa::all(); 
-        return view('cotacoes', compact('list'));
+        if(Empresa::count() > 0){
+            return view('cotacoes', compact('list'));
+        }else{
+            return view('cotacoes');
+        }
     }
 
     public function store(Request $request, $id)
     {
-
+        //auth()->user();   //Para acessar o usuário atualmente logado tu faz assim:
+        //auth()->id();     //Para pegar o id dele:
+        //auth()->check();  //Para checar se tem algum usuario logado:
         $altera = Empresa::find($id);
             if (!$altera) {
             // Aqui vai mostrar a pagina 404, ou seja, página de não encontrado
             abort(404);
         }
         $quantidadeAtual = $altera->acoes;
-        $preco = $altera->preco;
-        $altera->update(['acoes' => $quantidadeAtual - request('quantidade')]);
-        $altera->save();
+        $acoesCompradas = $request->input('quantidade');
+        
+        $user = auth()->user(); 
+        $saldo = $user->saldo;
 
-        $novo = new Compra();
-        $novo->tipo = $request->input('categoria');
-        $novo->quantidade = $request->input('quantidade');
-        $novo->valorCompra = input($preco);
-        $novo->empresa_id = $request->input($id);
-        //$novo->users_id = $request->input();
-        $novo->save();
-
-        $var = Compra::all();
-        foreach ($var as $v) {
-            echo "$v <br>";
+        $multi = $acoesCompradas * $altera->preco;
+        if($saldo > $multi){
+            $user->update(['saldo' => $saldo - $multi]);
+            $user->save();
+            $altera->update(['acoes' => $quantidadeAtual - request('quantidade')]);
+            $altera->save();
+            $novo = new Compra();
+            $novo->tipo = $request->input('categoria');
+            $novo->quantidade = $request->input('quantidade');
+            $novo->valorCompra = $altera->preco;
+            $novo->nomeEmpresa = $altera->nome;
+            $novo->empresa_id = $id;
+            $novo->users_id = auth()->id();
+            $novo->save();
+        }else{
+            echo "Saldo insuficiente <br>";
         }
-
-
-        //return redirect('/carteira');
+        return redirect('/index');
     }
+
 }

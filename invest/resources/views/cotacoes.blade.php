@@ -5,26 +5,27 @@
     <div class="row justify-content-center">
         <div class="col-sm-12">
             <div class="card border border-primary">
-                <div class="card-header border-primary"><h4><b>Cotações</b></h4></div>
+                <div class="card-header border-primary" style="background-color: skyblue"><h5><b>Cotações</b></h5></div>
                 
-@if(count($list) > 0)
+@if(isset($list))
                 
                 <table class="table table-ordered table-hover"> 
                     <thead>
                         <tr>
-                            <th><h5>ID</h5></th>
-                            <th><h5>Nome</h5></th>
-                            <th><h5>Sigla</h5></th>
-                            <th><h5>Categoria</h5></th>
-                            <th><h5>Anotações</h5></th>
-                            <th><h5>Preço</h5></th>
-                            <th><h5>Ações</h5></th>
-                            <th><h5>Opções</h5></th>                          
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Sigla</th>
+                            <th>Categoria</th>
+                            <th>Anotações</th>
+                            <th>Preço</th>
+                            <th>Ações</th>
+                            <th>Opções</th>                          
                         </tr>
                     </thead>
                     <tbody>
     @foreach($list as $lis)
-                    <form action="/cotacoes/{{ $lis->id }}/{{ $lis->preco }}" method="POST">
+        @if(auth()->id() == $lis->user_id)
+                    <form action="/cotacoes/{{ $lis->id }}" method="POST">
                         @csrf
                         <tr>
                             <td>{{ $lis->id }}</td>
@@ -38,7 +39,7 @@
                             <div class="form-row">
                                 <select id="categoria" style="width:170px;" name="categoria" class="form-control">
                                     <option selected required></option>
-                                    <option value="Ordinária">Ação Ordinária</option>
+                                    <option value="Ordinaria">Ação Ordinária</option>
                                     <option value="Preferencial">Ação Preferencial</option>
                                     <option value="EX">Ação EX</option>
                                     <option value="Nominativa">Ação Nominativa</option>
@@ -50,10 +51,13 @@
                             </td>
                         </tr>
                     </form>
+        @endif
     @endforeach
                     </tbody>
                 </table>
+                
 @endif
+                
                 </form>
                 <div class="card-footer border-primary">
                     <a class="btn btn-primary btn-sm" role="button" href="/empresa/novo">Nova Empresa</a>

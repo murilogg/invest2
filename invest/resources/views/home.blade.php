@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card border border-primary">
-                <div class="card-header border-primary">Dashboard</div>
+        <div class="col-md-11">
+            <div class="card border border-sucess">
+                <div class="card-header border-primary"><b>Dashboard - Você está logado !!!</b></div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -13,15 +13,33 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    Você está logado !!!<br>
-                    Não se esqueça de fazer um deposito primeiro
+                    
+                    <div class="card-deck">
+                            <div class="card border border-sucess" style="background-color: skyblue">
+                                <div class="card-body">
+                                    <h6 class="card-title"><b>Cadastro de Empresas</b></h6>
+                                    <p class="card=text">
+                                        Aqui você cadastra suas empresas.
+                                    </p>
+                                    <a href="/empresa/novo" class="btn btn-primary">Cadastro</a>
+                                </div>
+                            </div>
+                            <div class="card border border-sucess" style="background-color: skyblue">
+                                <div class="card-body">
+                                    <h6 class="card-title"><b>Fazer Transações</b></h6>
+                                    <p class="card=text">
+                                        Aqui você realiza o investimento ou resgate,<br>
+                                        Lembre-se de primeiro cadastrar as empresas.
+                                    </p>
+                                    <a href="/cotacoes" class="btn btn-primary">Comprar</a>
+                                    <a href="/carteira" class="btn btn-primary">Vender</a>
+                                </div>
+                            </div>            
+                        </div>
                 </div>
-@foreach($ids as $id)
                 <div class="card-footer border-primary">
-                    <a class="btn btn-primary btn-sm" role="button" href="/deposito/{{ $id->id }}">Fazer Deposito</a>
+                    <a class="btn btn-outline-primary btn-sm" role="button" href="/deposito">Fazer Deposito</a>
                 </div>
-@endforeach
             </div>
         </div>
     </div>

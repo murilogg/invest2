@@ -21,6 +21,8 @@ class CreateEmpresasTable extends Migration
             $table->string('categoria'); //comida, minerio
             $table->integer('acoes'); //ações da empresa
             $table->float('preco', 8, 3); // valor das ações da empresa
+            $table->integer('user_id')->unsigned();            
+            $table->foreign('user_id')->references('id')->on('users'); 
             $table->timestamps();
         });
     }

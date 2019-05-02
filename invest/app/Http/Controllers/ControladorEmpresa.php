@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Empresa;
-
+use App\Compra;
+use Illuminate\Support\Facades\DB;
 
 class ControladorEmpresa extends Controller
 {
@@ -15,13 +16,33 @@ class ControladorEmpresa extends Controller
 
     public function telaPrincipal()
     {
-        return view('index');
-    }
+        $empresa = Empresa::all();
+        $compra = Compra::all();
+        if(isset($empresa) and isset($compra)){
+            $dados=DB::table('compras')
+                ->select(
+                    DB::raw('nomeEmpresa'),
+                    DB::raw('sum(quantidade) as number'))
+                ->groupBy('nomeEmpresa')
+                ->get();
+            $array[] = ['NomeEmpresa', 'Number'];
+            foreach ($dados as $key => $value) {
+                $array[++$key] = [$value->nomeEmpresa, $value->number];
+            }
+            return view('index')->with('nomeEmpresa', json_encode($array));
+        }else{
+            return view('index');
+        }
+    }   
 
     public function index()
     {
         $listar = Empresa::all();
-        return view('empresa', compact('listar'));
+        if(Empresa::count() > 0){
+            return view('empresa', compact('listar'));
+        }else{
+            return view('empresa');
+        }
     }
 
     public function createEmpresa()
@@ -38,15 +59,23 @@ class ControladorEmpresa extends Controller
         $novo->acoes = $request->input('acoes');
         $novo->descricao = $request->input('descricao');
         $novo->categoria = $request->input('categoria');
+        $novo->user_id = auth()->id();
         $novo->save();
         return redirect('/empresa');
     }
 
     public function destroy($id)
     {
-        $delete = Empresa::find($id);
-        if(isset($delete)) {
-            $delete->delete();
+        $delEmpresa = Empresa::find($id);
+        $delCompra = Compra::all();
+        if(isset($delEmpresa) and isset($delCompra)) {
+            foreach($delCompra as $del){
+                $delId = $del->empresa_id;
+                if($delId == $id){
+                    $del->delete();
+                }
+            }
+            $delEmpresa->delete();
         }
         return redirect('/empresa');
     }
@@ -57,7 +86,7 @@ class ControladorEmpresa extends Controller
         if(isset($edit)) {
             return view('editarEmpresa', compact('edit'));
         }
-        return redirect('/empresa');
+            return redirect('/empresa');
     }
 
     public function consulta($id) 
